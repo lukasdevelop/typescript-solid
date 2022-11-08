@@ -13,9 +13,11 @@ class ListAllUsersUseCase {
     
     const user = this.usersRepository.findById(user_id)
 
-    const userAdmin = this.usersRepository.turnAdmin(user)
+    if(!user){
+      throw new Error("User not found.")
+    }
 
-    if(!userAdmin){
+    if(!user.admin){
       throw new Error("User received not is admin.")
     }
 

@@ -18,9 +18,9 @@ class CreateUserUseCase {
       throw new Error("Email already registed.")
     }
     
-    const user = this.usersRepository.create({email, name})
+    const newUser = this.usersRepository.create({email, name})
 
-    return user
+    return newUser
   }
 }
 
