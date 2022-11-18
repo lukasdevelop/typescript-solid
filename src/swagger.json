@@ -1,0 +1,161 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Introdução ao Solid",
+        "description": "Introdução ao Solid com Typescript",
+        "version": "1.0.0",
+        "contact": {
+            "email": "analista.sistemas.lucas@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "User name example",
+                                    "email": "analista.sistemas.lucas@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Email already registed"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "List all users",
+                "description": "List all users",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "You need to be an administrator to list all users"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "parameters":[
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Nome do usuario pelo ID",
+                        "required": true
+                    }
+                ],
+                "summary":"Returns a specific user",
+                "description": "Returns a specific user by id ",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items":{
+
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuario não encontrado."
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "parameters":[
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Torna admin um usuario pelo id",
+                        "required": true
+                    }
+                ],
+                "summary":"Retorna o usuario admin",
+                "description": "Retorna o usuario admin",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Usuario não encontrado."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas":{
+            "User":{
+                "type": "object",
+                "properties":{
+                    "name":{
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
